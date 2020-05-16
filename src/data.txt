@@ -1,0 +1,21 @@
+John|43|123 Apple street|514 428-3452
+Katya| 26|49 Queen Mary Road|514 234-7654
+Ahmad|91|1888 Pepper Lane|
+kishan|43|123 Apple street|514 428-3452
+shrey| 26|49 Queen Mary Road|514 234-7654
+viru||1888 Pepper Lane|
+viraj|43| 123 Apple street|514 428-3452
+anand| 26|49 Queen Mary Road|514 234-7654
+hingu|91|1888 Pepper Lane|
+kartey|43|  123 Apple street   |514 428-3452
+bhavik| 26|49 Queen Mary Road| 514 234-7654
+jatan|91|1888 Pepper Lane|
+akash|43|123 Apple street|514 428-3452
+kandi| 26|49 Queen Mary Road|514 234-7654
+Tirth|91|1888 Pepper Lane|
+Shubham||123 Apple street|
+parth| 26|49 Queen Mary Road|514 234-7654
+mayank|91|1888 Pepper Lane|
+harsh|43|123 Apple street| 514 428-3452
+alex| 26|49 Queen Mary Road|514 234-7654
+nerd|91|1888 Pepper Lane|
