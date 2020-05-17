@@ -114,16 +114,14 @@ def print_report(request):
 
 def main():
     read_file_store_in_dictionary()
-    print("Dataset loaded successfully")
+    print("\nDataset loaded successfully")
 
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((SERVER_IP, SERVER_PORT))
-    except socket.error as error:
-        print("Unable to bind Server: ", error)
 
-    print("\nServer is up and running. ")
-    try:
+        print("\nServer is up and running. ")
+
         while True:
             request, address = s.recvfrom(1000)
             request = byte_to_string(request).strip()
@@ -131,8 +129,9 @@ def main():
             func_to_execute = switch(choice)
             response = func_to_execute(request)
             s.sendto(string_to_byte(response), address)
-    except error:
-        print("Error occurred: ", error)
+
+    except (RuntimeError, OSError) as error:
+        print("\nError occurred: ", error)
     finally:
         print('Closing the socket')
         s.close()
