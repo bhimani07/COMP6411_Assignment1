@@ -1,5 +1,25 @@
 import socket
 
+
+class BgColor:
+    SUCCESS = '\033[92m'
+    BOLD = '\033[1m'
+    ENDC = '\033[0m'
+    ERROR = '\033[91m'
+
+    @staticmethod
+    def color_error_wrapper(string):
+        return BgColor.ERROR + string + BgColor.ENDC
+
+    @staticmethod
+    def color_bold_wrapper(string):
+        return BgColor.BOLD + string + BgColor.ENDC
+
+    @staticmethod
+    def color_success_wrapper(string):
+        return BgColor.SUCCESS + string + BgColor.ENDC
+
+
 SERVER_IP = 'localhost'
 SERVER_PORT = 9999
 LIST = ["Python DB Menu",
@@ -9,26 +29,32 @@ LIST = ["Python DB Menu",
         "4. Update customer's age",
         "5. Update customer's address",
         "6. Update customer's phone",
-        "7. Print report", "8. Exit",
-        "Select:"]
+        "7. Print report", "8. Exit"]
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
 def display_options():
-    print('\n', LIST[0], '\n\n',
-          LIST[1], '\n',
-          LIST[2], '\n',
-          LIST[3], '\n',
-          LIST[4], '\n', LIST[5], '\n', LIST[6], '\n',
-          LIST[7], '\n',
-          LIST[8], '\n\n',
-          LIST[9])
+    print(BgColor.color_bold_wrapper(('\n' + LIST[0] + '\n\n' +
+                                      LIST[1] + '\n' +
+                                      LIST[2] + '\n' +
+                                      LIST[3] + '\n' +
+                                      LIST[4] + '\n' + LIST[5] + '\n' + LIST[6] + '\n' +
+                                      LIST[7] + '\n' +
+                                      LIST[8] + '\n')))
 
 
 def take_input():
-    choice = int(input())
-    if choice not in range(1, 9):
-        raise Exception("Enter Valid Number")
+    flag = True
+    while flag:
+        choice = input("Select: ")
+        if not choice.isnumeric():
+            print(BgColor.color_error_wrapper("Error: Only numbers are allowed"))
+            continue
+        choice = int(choice)
+        if choice not in range(1, 9):
+            print(BgColor.color_error_wrapper("Error: Enter Valid Number"))
+            continue
+        flag = not flag
     return choice
 
 
@@ -56,18 +82,20 @@ def send_request(message):
 
 def receive_response():
     response, address = s.recvfrom(10000)
-    return byte_to_string(response)
+    return BgColor.color_success_wrapper(byte_to_string(response))
 
 
 def generic_input(field):
-    value = input("Enter " + field + " ")
-    if field is "age" and (not value.isnumeric()):
-        print("Age can't have anything other than numbers.")
-        generic_input(field)
-
-    if (field is "phone") and len(value) != 10:
-        print("Phone number must be 10 digit long.")
-        generic_input(field)
+    flag = True
+    while flag:
+        value = input("Enter " + field + " ")
+        if (field is "age" or field is "phone") and (not value.isnumeric()):
+            print(BgColor.color_error_wrapper("Error:  " + field + " can't have anything other than numbers."))
+            continue
+        if field is "phone" and len(value) != 10:
+            print(BgColor.color_error_wrapper("Error: Invalid Phone number must be 10 digit long."))
+            continue
+        flag = False
     return value
 
 

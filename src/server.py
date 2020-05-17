@@ -37,13 +37,6 @@ def switch(choice):
     return switch_case.get(choice)
 
 
-def append_attributes(list_of_attribute):
-    body = ' '
-    for attribute in list_of_attribute:
-        body = body + attribute + ' '
-    return body
-
-
 def get_attribute_from_request(request):
     attribute_list = request.split('|')
     return attribute_list[1:]
@@ -129,8 +122,7 @@ def main():
     except socket.error as error:
         print("Unable to bind Server: ", error)
 
-    print("\nServer Started ")
-
+    print("\nServer is up and running. ")
     try:
         while True:
             request, address = s.recvfrom(1000)
@@ -140,7 +132,7 @@ def main():
             response = func_to_execute(request)
             s.sendto(string_to_byte(response), address)
     except error:
-        print("Error occurred while receiving message", error)
+        print("Error occurred: ", error)
     finally:
         print('Closing the socket')
         s.close()
