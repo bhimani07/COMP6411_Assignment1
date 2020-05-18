@@ -48,7 +48,7 @@ def take_input():
     while flag:
         choice = input("Select: ")
         if not choice.isnumeric():
-            print(BgColor.color_error_wrapper("Error: Only numbers are allowed"))
+            print(BgColor.color_error_wrapper("Error: Only numbers are permitted"))
             continue
         choice = int(choice)
         if choice not in range(1, 9):
@@ -89,11 +89,11 @@ def generic_input(field):
     flag = True
     while flag:
         value = input("Enter " + field + " ")
-        if (field is "age" or field is "phone") and (not value.isnumeric()):
-            print(BgColor.color_error_wrapper("Error:  " + field + " can't have anything other than numbers."))
+        if value and (field is "age" or field is "phone") and (not value.isnumeric()):
+            print(BgColor.color_error_wrapper("Error: " + field + ": No Character, String and Whitespaces are allowed (only Numbers are permitted)"))
             continue
-        if field is "phone" and len(value) != 10:
-            print(BgColor.color_error_wrapper("Error: Invalid Phone number must be 10 digit long."))
+        if value and field is "phone" and len(value) != 10:
+            print(BgColor.color_error_wrapper("Error: Invalid Phone number, must be 10 digit long."))
             continue
         flag = False
     return value
@@ -102,6 +102,8 @@ def generic_input(field):
 def append_attributes(list_of_attribute):
     body = ''
     for attribute in list_of_attribute:
+        if not attribute:
+            attribute = ' '
         body = body + attribute + '|'
     return body.strip('|')
 
