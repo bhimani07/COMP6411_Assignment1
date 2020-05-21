@@ -20,6 +20,8 @@ def read_file_store_in_dictionary():
         attribute_list = line.split('|')
         attribute_list = [item.strip() for item in attribute_list]
         name = attribute_list[0].strip().lower()
+        if not name:
+            continue
         if name not in DATASET.keys():
             DATASET[name] = attribute_list[1:]
 
