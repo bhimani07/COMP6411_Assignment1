@@ -44,17 +44,14 @@ def display_options():
 
 
 def take_input():
-    flag = True
-    while flag:
-        choice = input("Select: ")
-        if not choice.isnumeric():
-            print(BgColor.color_error_wrapper("Error: Only numbers are permitted"))
-            continue
-        choice = int(choice)
-        if choice not in range(1, 9):
-            print(BgColor.color_error_wrapper("Error: Enter Valid Number"))
-            continue
-        flag = not flag
+    choice = input("Select: ").strip()
+    if not choice.isnumeric():
+        print(BgColor.color_error_wrapper("Error: Only numbers are permitted"))
+        choice = take_input()
+    choice = int(choice)
+    if choice not in range(1, 9):
+        print(BgColor.color_error_wrapper("Error: Enter Valid Number"))
+        choice = take_input()
     return choice
 
 
@@ -86,16 +83,13 @@ def receive_response():
 
 
 def generic_input(field):
-    flag = True
-    while flag:
-        value = input("Enter " + field + " ")
-        if value and (field is "age" or field is "phone") and (not value.isnumeric()):
-            print(BgColor.color_error_wrapper("Error: " + field + ": No Character, String and Whitespaces are allowed (only Numbers are permitted)"))
-            continue
-        if value and field is "phone" and len(value) != 10:
-            print(BgColor.color_error_wrapper("Error: Invalid Phone number, must be 10 digit long."))
-            continue
-        flag = False
+    value = input("Enter " + field + " ").strip()
+    if field is "name" and not value:
+        print(BgColor.color_error_wrapper("Error: " + field + " can't be empty"))
+        value = generic_input(field)
+    if value and field is "age" and (not value.isnumeric()):
+        print(BgColor.color_error_wrapper("Error: " + field + ": Only Numbers are permitted"))
+        value = generic_input(field)
     return value
 
 
